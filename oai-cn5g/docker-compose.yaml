@@ -187,7 +187,7 @@ networks:
         #     - /dev/bus/usb/:/dev/bus/usb/
         volumes: 
             - /dev/bus/usb/:/dev/bus/usb/
-            - ../../../targets/PROJECTS/GENERIC-NR-5GC/CONF/gnb.sa.band1.u0.52PRB.usrpb210.conf:/opt/oai-gnb/etc/gnb.conf
+            - GENERIC-NR-5GC/CONF/gnb.sa.band1.u0.52PRB.usrpb210.conf:/opt/oai-gnb/etc/gnb.conf
         # for performance reasons, we use host mode: in bridge mode, we have
         # unacceptable DL TCP performance. However, the whole point of
         # containerization is to not be in host mode, so update this to macvlan
