@@ -175,3 +175,29 @@ networks:
                 - subnet: 192.168.70.128/26
         driver_opts:
             com.docker.network.bridge.name: "oai-cn5g"
+
+    oai-gnb:
+        image: oaisoftwarealliance/oai-gnb:develop
+        privileged: true
+        environment:
+            USE_B2XX: 'yes'
+            USE_ADDITIONAL_OPTIONS: -E --continuous-tx
+
+        # devices:
+        #     - /dev/bus/usb/:/dev/bus/usb/
+        volumes: 
+            - /dev/bus/usb/:/dev/bus/usb/
+            - ../../../targets/PROJECTS/GENERIC-NR-5GC/CONF/gnb.sa.band1.u0.52PRB.usrpb210.conf:/opt/oai-gnb/etc/gnb.conf
+        # for performance reasons, we use host mode: in bridge mode, we have
+        # unacceptable DL TCP performance. However, the whole point of
+        # containerization is to not be in host mode, so update this to macvlan
+        # later.
+        network_mode: "host"
+        # entrypoint: /opt/oai-gnb/bin/nr-softmodem -O /opt/oai-gnb/etc/gnb.conf -E --continuous-tx
+        #entrypoint: /bin/bash -c "sleep infinity"
+        healthcheck:
+            # pgrep does NOT work
+            test: /bin/bash -c "ps aux | grep -v grep | grep -c nr-softmodem"
+            interval: 10s
+            timeout: 5s
+            retries: 5
