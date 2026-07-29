@@ -166,16 +166,6 @@ services:
         networks:
             public_net:
                 ipv4_address: 192.168.70.135
-networks:
-    public_net:
-        driver: bridge
-        name: oai-cn5g-public-net
-        ipam:
-            config:
-                - subnet: 192.168.70.128/26
-        driver_opts:
-            com.docker.network.bridge.name: "oai-cn5g"
-
     oai-gnb:
         image: oaisoftwarealliance/oai-gnb:develop
         privileged: true
@@ -187,7 +177,7 @@ networks:
         #     - /dev/bus/usb/:/dev/bus/usb/
         volumes: 
             - /dev/bus/usb/:/dev/bus/usb/
-            - GENERIC-NR-5GC/CONF/gnb.sa.band1.u0.52PRB.usrpb210.conf:/opt/oai-gnb/etc/gnb.conf
+            - ../GENERIC-NR-5GC/CONF/gnb.sa.band78.fr1.106PRB.usrpb210.conf:/opt/oai-gnb/etc/gnb.conf
         # for performance reasons, we use host mode: in bridge mode, we have
         # unacceptable DL TCP performance. However, the whole point of
         # containerization is to not be in host mode, so update this to macvlan
@@ -201,3 +191,12 @@ networks:
             interval: 10s
             timeout: 5s
             retries: 5
+networks:
+    public_net:
+        driver: bridge
+        name: oai-cn5g-public-net
+        ipam:
+            config:
+                - subnet: 192.168.70.128/26
+        driver_opts:
+            com.docker.network.bridge.name: "oai-cn5g"
