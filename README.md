@@ -1,6 +1,6 @@
 # EasyOAI
 
-EasyOAI is a simplified deployment project for OpenAirInterface (OAI) 5G components. It provides a pre-configured environment to quickly set up a 5G Core Network (CN) and a Next-Generation NodeB (gNB) using Docker containers.
+EasyOAI is a simplified deployment project for [OpenAirInterface](https://gitlab.eurecom.fr/oai/openairinterface5g) (OAI) 5G components. It provides a pre-configured environment to quickly set up a 5G Core Network (CN) and a Next-Generation NodeB (gNB) using Docker containers.
 
 ## Project Structure
 
@@ -16,15 +16,23 @@ EasyOAI is a simplified deployment project for OpenAirInterface (OAI) 5G compone
 ## Prerequisites
 
 - **Operating System**: Linux (tested on Ubuntu).
-- **Docker**: Installed and running.
-- **Docker Compose**: Installed (version 2.x recommended).
-- **Hardware (Optional)**: A USRP B210 or similar SDR if you intend to run the gNB with physical hardware.
+- **Docker Installation**: Install Docker using the convenience script:
+  ```bash
+  curl -fsSL https://get.docker.com -o get-docker.sh
+  sudo sh get-docker.sh
+  ```
+- **Post-installation**: To use Docker as a non-root user:
+  ```bash
+  sudo usermod -aG docker $USER
+  ```
+  *Note: You may need to log out and back in for this change to take effect.*
+- **Hardware (Required)**: A USRP B210 or similar SDR and a USB 3.0 port are required to run the gNB.
 
 ## Installation & Usage
 
 1. **Clone the repository**:
    ```bash
-   git clone <repository-url>
+   git clone --depth=1 https://github.com/xuminready/EasyOAI.git
    cd EasyOAI
    ```
 
@@ -65,6 +73,15 @@ The Core Network parameters (PLMN, MNC, MCC, DNN, etc.) are defined in `oai-cn5g
 - **Hardware Access**: Ensure the USRP is connected and accessible by the host. The `oai-gnb` container runs in privileged mode with access to `/dev/bus/usb/`.
 - **Network Mode**: The gNB is configured in `host` network mode for performance reasons. Ensure there are no port conflicts on the host.
 - **Database Issues**: If the services fail to connect to the database, ensure the `mysql` container is healthy.
+
+## Citation
+
+If you use this project in your research, please cite:
+
+M. Xu, B. Zhu and H. -G. Yeh, "Developing a Cost-Effective Standalone 5G Network for Advanced Wireless Research," 2025 IEEE International Conference on Green Energy and Smart Systems (GESS), Long Beach, CA, USA, 2025, pp. 1-5, doi: 10.1109/GESS67704.2025.11297186.
+Available at: [https://ieeexplore.ieee.org/document/11297186](https://ieeexplore.ieee.org/document/11297186)
+
+**Keywords:** Wireless communication; Technological innovation; Costs; 5G mobile communication; Smart systems; New Radio; Test equipment; Mirrors; Open source software; Software radio; 5G SA networks; Software-Defined Radio (SDR); 5G Core Network (CN); OpenAirInterface; Universal Software Radio Peripheral (USRP)
 
 ## License
 See the `LICENSE` file for details.
